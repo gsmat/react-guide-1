@@ -2,7 +2,7 @@ import Expenses from "./components/Expenses/Expenses";
 import React, { useState } from "react";
 import NewExpense from "./components/NewExpense/NewExpense";
 
-const STATIC_EXPENSES = ([
+const STATIC_EXPENSES = [
   {
     id: "e1",
     title: "Toilet Paper",
@@ -22,20 +22,22 @@ const STATIC_EXPENSES = ([
     amount: 450,
     date: new Date(2021, 5, 12),
   },
-]);
+];
+
 const App = () => {
-  
-  const [expenses,setExpenses] = useState(STATIC_EXPENSES);
-  const expenseHandler = (expense) =>{
-   setExpenses([...expenses, expense]);
-  }
+  const [expenses, setExpenses] = useState(STATIC_EXPENSES);
+  const expenseHandler = (expense) => {
+    setExpenses((prevExpense) => {
+      return [expense, ...expenses];
+    });
+  };
 
   return (
     <div>
-      <NewExpense onAddExpense={expenseHandler}/>
+      <NewExpense onAddExpense={expenseHandler} />
       <Expenses items={expenses} />
     </div>
   );
-}
+};
 
 export default App;
