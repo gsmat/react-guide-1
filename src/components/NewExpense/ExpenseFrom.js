@@ -2,10 +2,11 @@ import React, { useState } from "react";
 
 import "./ExpenseFrom.css";
 
-const ExpenseFrom = () => {
+const ExpenseFrom = (props) => {
   const [enteredTitle, setEnteredTitle] = useState("");
   const [enteredDate, setEnteredDate] = useState("");
   const [enteredNumber, setEnteredNumber] = useState("");
+
   // this method not correctly
   // when we used updates previous element this method dont give correct data\
   /*
@@ -27,25 +28,29 @@ const ExpenseFrom = () => {
   const dateChangeHandler = (event) => setEnteredDate(event.target.value);
   const numberChangeHandler = (event) => setEnteredNumber(event.target.value);
 
-  const submitFromHandler = (event) =>{
+  const submitFromHandler = (event) => {
     event.preventDefault();
     const expenseData = {
-      title : enteredTitle,
-      number : enteredNumber,
-      date : new Date(enteredDate)
-    }
-    console.log(expenseData);
-    setEnteredTitle('');
-    setEnteredNumber('');
-    setEnteredDate('');
-  }
+      title: enteredTitle,
+      amount: enteredNumber,
+      date: new Date(enteredDate),
+    };
+    props.onSaveExpenseData(expenseData);
+    setEnteredTitle("");
+    setEnteredNumber("");
+    setEnteredDate("");
+  };
 
   return (
     <form onSubmit={submitFromHandler}>
       <div className="new-exoense__controls">
         <div className="new-expense__control">
           <label>Title</label>
-          <input type="text" value={enteredTitle} onChange={titleChangeHandler} />
+          <input
+            type="text"
+            value={enteredTitle}
+            onChange={titleChangeHandler}
+          />
         </div>
         <div className="new-expense__control">
           <label>Amount</label>
